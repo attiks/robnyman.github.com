@@ -11,14 +11,16 @@
         matchMediaSupported.innerHTML = "supported";
 
         // Establishing media check
-        width600Check = window.matchMedia("(min-width: 600px)"),
+        width600Check = window.matchMedia("screen, (min-width: 600px)"),
         height500Check = window.matchMedia("(min-height: 500px)"),
         portraitOrientationCheck = window.matchMedia("(orientation: portrait)");
        
         // Add listeners for detecting changes
-        width600Check.addListener(setWidthValue);
-        height500Check.addListener(setHeightValue);
-        portraitOrientationCheck.addListener(setOrientationValue);
+        if (window.matchMedia.addListener) {
+          width600Check.addListener(setWidthValue);
+          height500Check.addListener(setHeightValue);
+          portraitOrientationCheck.addListener(setOrientationValue);
+        }
     }
 
     function setWidthValue (mediaQueryList) {
@@ -40,6 +42,11 @@
         portraitOrientation.innerHTML = portraitOrientationCheck.matches;
     }
 
-    window.addEventListener("DOMContentLoaded", setValues, false);
+    if (window.matchMedia.addListener) {
+      window.addEventListener("DOMContentLoaded", setValues, false);
+    }
+    else {
+      window.attachEvent( "onload", setValues );
+    }
 })();
 

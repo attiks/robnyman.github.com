@@ -12,7 +12,7 @@
  * This polyfill triggers tests on window resize and orientationchange.
  */
 
-window.matchMedia = window.matchMedia || (function (doc) {
+window.matchMedia = window.matchMedia || (function (doc, window) {
 
   "use strict";
 
@@ -26,9 +26,6 @@ window.matchMedia = window.matchMedia || (function (doc) {
   div.style.cssText = "position:absolute;top:-100em";
   fakeBody.style.background = "none";
   fakeBody.appendChild(div);
-  // Ensure addEventListener and removeEventListener are defined.
-  window.addEventListener = window.addEventListener || window.attachEvent || function () {};
-  window.removeEventListener = window.removeEventListener || window.detachEvent || function () {};
   /**
    * A replacement for the native MediaQueryList object.
    *
@@ -136,4 +133,4 @@ window.matchMedia = window.matchMedia || (function (doc) {
     // Build a new MediaQueryList object with the result of the check.
     return new MediaQueryList(q);
   };
-}(document));
+}(document, window));
